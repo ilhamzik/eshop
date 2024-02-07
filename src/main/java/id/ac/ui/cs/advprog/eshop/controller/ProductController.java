@@ -50,7 +50,7 @@ public class ProductController {
 
     @GetMapping("/delete/{productId}")
     public String productListPage(@PathVariable String productId){
-        service.delete(Integer.parseInt(productId));
+        service.delete(productId);
         return "ProductList";
     }
 }

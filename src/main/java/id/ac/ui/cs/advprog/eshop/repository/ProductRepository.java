@@ -20,13 +20,13 @@ public class ProductRepository {
         return productData.iterator();
     }
 
-    public Product findById(int productId) {
+    public Product findById(String productId) {
         Iterator<Product> productIterator = findAll();
         List<Product> allProduct = new ArrayList<>();
         productIterator.forEachRemaining(allProduct::add);
 
         for (Product product : allProduct){
-            if (product.getProductId().equals(String.valueOf(productId))){
+            if (product.getProductId().equals(productId)){
                 return product;
             }
         }
