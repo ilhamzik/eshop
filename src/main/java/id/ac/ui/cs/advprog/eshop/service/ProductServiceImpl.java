@@ -38,4 +38,14 @@ public class ProductServiceImpl implements ProductService{
     public Product edit(Product updatedProduct, String newDataId) {
         return productRepository.update(updatedProduct, newDataId);
     }
+
+    @Override
+    public String delete(int productId) {
+        Product target = productRepository.findById(productId);
+        List<Product> productIterator = findAll();
+
+        productRepository.delete(target);
+
+        return "Success";
+    }
 }
