@@ -27,7 +27,7 @@ public class ProductController {
         service.create(product);
         return "redirect:list";
     }
-    
+
     @GetMapping("/list")
     public String productListPage(Model model){
         List<Product> allProducts = service.findAll();
