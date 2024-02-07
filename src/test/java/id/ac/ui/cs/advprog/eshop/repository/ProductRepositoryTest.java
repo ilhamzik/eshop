@@ -49,7 +49,7 @@ public class ProductRepositoryTest {
         assertEquals(product.getProductName(),savedProduct.getProductName());
         assertEquals(product.getProductQuantity(),savedProduct.getProductQuantity());
 
-        productRepository.delete(product.getProductId());
+        productRepository.delete(product);
         productIterator = productRepository.findAll();
         assertFalse(productIterator.hasNext());
     }
@@ -123,7 +123,7 @@ public class ProductRepositoryTest {
         Product testProduct = new Product();
         testProduct.setProductName("tidak ada");
         testProduct.setProductQuantity(1);
-        productRepository.delete(testProduct.getProductId());
+        productRepository.delete(testProduct);
 
         Iterator<Product> productIterator = productRepository.findAll();
         productIterator.next();
