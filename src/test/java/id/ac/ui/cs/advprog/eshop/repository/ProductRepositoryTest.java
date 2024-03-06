@@ -12,9 +12,9 @@ import java.util.Iterator;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class ProductRepositoryTest {
+public class ProductRepositoryImplTest {
     @InjectMocks
-    ProductRepository productRepository;
+    ProductRepositoryImpl productRepositoryImpl;
     @BeforeEach
     void setUp(){
     }
@@ -24,9 +24,9 @@ public class ProductRepositoryTest {
         product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
         product.setProductName("Sampo Cap Bambang");
         product.setProductQuantity(100);
-        productRepository.create(product);
+        productRepositoryImpl.create(product);
 
-        Iterator<Product> productIterator = productRepository.findAll();
+        Iterator<Product> productIterator = productRepositoryImpl.findAll();
         assertTrue(productIterator.hasNext());
         Product savedProduct = productIterator.next();
         assertEquals(product.getProductId(),savedProduct.getProductId());
@@ -40,17 +40,17 @@ public class ProductRepositoryTest {
         product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
         product.setProductName("Sampo Cap Bambang");
         product.setProductQuantity(100);
-        productRepository.create(product);
+        productRepositoryImpl.create(product);
 
-        Iterator<Product> productIterator = productRepository.findAll();
+        Iterator<Product> productIterator = productRepositoryImpl.findAll();
         assertTrue(productIterator.hasNext());
         Product savedProduct = productIterator.next();
         assertEquals(product.getProductId(),savedProduct.getProductId());
         assertEquals(product.getProductName(),savedProduct.getProductName());
         assertEquals(product.getProductQuantity(),savedProduct.getProductQuantity());
 
-        productRepository.delete(product);
-        productIterator = productRepository.findAll();
+        productRepositoryImpl.delete(product.getProductId());
+        productIterator = productRepositoryImpl.findAll();
         assertFalse(productIterator.hasNext());
     }
 
@@ -60,9 +60,9 @@ public class ProductRepositoryTest {
         product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
         product.setProductName("Sampo Cap Bambang");
         product.setProductQuantity(100);
-        productRepository.create(product);
+        productRepositoryImpl.create(product);
 
-        Iterator<Product> productIterator = productRepository.findAll();
+        Iterator<Product> productIterator = productRepositoryImpl.findAll();
         assertTrue(productIterator.hasNext());
         Product savedProduct = productIterator.next();
         String oldName = savedProduct.getProductName();
@@ -73,11 +73,11 @@ public class ProductRepositoryTest {
 
         product.setProductName("Kecap Cap Bombong");
         product.setProductQuantity(120);
-        Product productToCheck = productRepository.findById(product.getProductId());
+        Product productToCheck = productRepositoryImpl.findById(product.getProductId());
         assertNotEquals(product.getProductName(),oldName);
         assertNotEquals(product.getProductQuantity(),oldQuantity);
 
-        productIterator = productRepository.findAll();
+        productIterator = productRepositoryImpl.findAll();
         savedProduct = productIterator.next();
         assertEquals(product.getProductId(),savedProduct.getProductId());
         assertEquals(product.getProductName(),savedProduct.getProductName());
@@ -86,7 +86,7 @@ public class ProductRepositoryTest {
 
     @Test
     void testFindAllIfEmpty(){
-        Iterator<Product> productIterator = productRepository.findAll();
+        Iterator<Product> productIterator = productRepositoryImpl.findAll();
         assertFalse(productIterator.hasNext());
     }
 
@@ -96,15 +96,15 @@ public class ProductRepositoryTest {
         product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
         product1.setProductName("Sampo Cap Bambang");
         product1.setProductQuantity(100);
-        productRepository.create(product1);
+        productRepositoryImpl.create(product1);
 
         Product product2 = new Product();
         product2.setProductId("a0f9d346-90b1-437d-a0bf-d0821dde9096");
         product2.setProductName("Sampo Cap Usep");
         product2.setProductQuantity(50);
-        productRepository.create(product2);
+        productRepositoryImpl.create(product2);
 
-        Iterator<Product> productIterator = productRepository.findAll();
+        Iterator<Product> productIterator = productRepositoryImpl.findAll();
         assertTrue(productIterator.hasNext());
         Product savedProduct = productIterator.next();
         assertEquals(product1.getProductId(),savedProduct.getProductId());
@@ -118,14 +118,14 @@ public class ProductRepositoryTest {
         Product newProduct = new Product();
         newProduct.setProductName("ada");
         newProduct.setProductQuantity(10);
-        productRepository.create(newProduct);
+        productRepositoryImpl.create(newProduct);
 
         Product testProduct = new Product();
         testProduct.setProductName("tidak ada");
         testProduct.setProductQuantity(1);
-        productRepository.delete(testProduct);
+        productRepositoryImpl.delete(testProduct.getProductId());
 
-        Iterator<Product> productIterator = productRepository.findAll();
+        Iterator<Product> productIterator = productRepositoryImpl.findAll();
         productIterator.next();
         assertFalse(productIterator.hasNext());
     }

@@ -1,7 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.service;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
-import id.ac.ui.cs.advprog.eshop.repository.ProductRepository;
+import id.ac.ui.cs.advprog.eshop.repository.ProductRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +13,17 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService{
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductRepositoryImpl productRepositoryImpl;
 
     @Override
     public Product create(Product product){
-       productRepository.create(product);
+       productRepositoryImpl.create(product);
        return product;
     }
 
     @Override
     public List<Product> findAll(){
-        Iterator<Product> productIterator =  productRepository.findAll();
+        Iterator<Product> productIterator =  productRepositoryImpl.findAll();
         List<Product> allProduct = new ArrayList<>();
         productIterator.forEachRemaining(allProduct::add);
         return allProduct;
@@ -31,20 +31,20 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product getById(String productId) {
-        return productRepository.findById(productId);
+        return productRepositoryImpl.findById(productId);
     }
 
     @Override
     public Product edit(Product updatedProduct, String newDataId) {
-        return productRepository.update(updatedProduct, newDataId);
+        return productRepositoryImpl.update(updatedProduct, newDataId);
     }
 
     @Override
     public String delete(String productId) {
-        Product target = productRepository.findById(productId);
+        Product target = productRepositoryImpl.findById(productId);
         List<Product> productIterator = findAll();
 
-        productRepository.delete(target);
+        productRepositoryImpl.delete(productId);
 
         return "Success";
     }
